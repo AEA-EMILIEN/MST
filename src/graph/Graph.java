@@ -32,7 +32,7 @@ public class Graph {
 		boolean[][] matrix = matriceAlea(n, p, rand);
 		for (int i = 0; i < n; i++) {
 			this.addVertex(i);
-			for (int j = 0; j != i && j < n; j++) {
+			for (int j = 0; j < i ; j++) {
 				if (matrix[i][j]) {
 					this.addEdge(i, j, rand.nextInt(N));
 				}
@@ -45,7 +45,7 @@ public class Graph {
 		boolean[][] matrix = new boolean[n][n];
 		float r ;
 		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
+			for (int j = 0; j<i; j++) {
 				r = rand.nextFloat();
 				if (r <= p) 
 					matrix[i][j] = true; 
