@@ -9,9 +9,12 @@ import utils.Parser;
 public class Main {
 
 	public static void main(String[] args) throws VertexNotFoundException, FileNotFoundException {
-		Graph g = new Parser().FileToGraph("data/graph_demo.txt");
+		//Graph g = new Parser().FileToGraph("data/graph_demo.txt");
 		//System.out.println(g.toString());
+		//Parser p = new Parser();
+		//p.GraphToFile(g, "test.txt");
+		Graph g = new Graph(5, (float)0.5, 100);
 		Parser p = new Parser();
-		p.GraphToFile(g, "test.txt");
+		p.GraphToFile(g, "alea.txt");
 	}
 }

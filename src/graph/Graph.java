@@ -3,6 +3,8 @@ package graph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
 import exception.VertexNotFoundException;
 
 public class Graph {
@@ -13,6 +15,46 @@ public class Graph {
 		this.vertex = new HashMap<Integer, HashMap<Integer,Integer>>();
 	}
 	
+	/**
+	 * Graphe d'Erdos
+	 * @param n
+	 * @param p
+	 * @throws IllegalArgumentException
+	 * @throws VertexNotFoundException 
+	 */
+	public Graph(int n, float p, int N) throws IllegalArgumentException, VertexNotFoundException{
+		
+		if(p<0.000 || p>1.000 || n<0)
+			throw new IllegalArgumentException();
+		
+		this.vertex = new HashMap<Integer, HashMap<Integer,Integer>>();
+		Random rand = new Random();
+		boolean[][] matrix = matriceAlea(n, p, rand);
+		for (int i = 0; i < n; i++) {
+			this.addVertex(i);
+			for (int j = 0; j != i && j < n; j++) {
+				if (matrix[i][j]) {
+					this.addEdge(i, j, rand.nextInt(N));
+				}
+					
+			}
+		}
+	}
+	
+	private boolean[][] matriceAlea(int n,  float p, Random rand) {
+		boolean[][] matrix = new boolean[n][n];
+		float r ;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				r = rand.nextFloat();
+				if (r <= p) 
+					matrix[i][j] = true; 
+				else
+					matrix[i][j] = false;
+			}
+		}
+		return matrix;
+	}
 	public HashMap<Integer, Integer> getVertex(int v) throws VertexNotFoundException {
 		if (this.vertex.containsKey(v)) 
 			return this.vertex.get(v);
