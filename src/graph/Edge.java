@@ -1,9 +1,9 @@
 package graph;
 
 public class Edge {
-	private int start ;
-	private int end ;
-	private int weigth ;
+	public int start ;
+	public int end ;
+	public int weigth ;
 	
 	public Edge (int s, int e, int w) {
 		this.start = s;

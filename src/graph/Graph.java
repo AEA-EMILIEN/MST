@@ -1,9 +1,13 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import exception.VertexNotFoundException;
 
@@ -83,33 +87,121 @@ public class Graph {
 		this.vertex.get(e).put(v, w);
 		}
 	}
+
 	
 	public List<Edge> getEdges() throws VertexNotFoundException {
 		Edge edge ;
 		ArrayList<Edge> edges = new ArrayList<Edge>();
 		for (int v : this.vertex.keySet()) {
+			
 			for (int e : this.getVertex(v).keySet()) {
-				edge = new Edge(v,e,this.getVertex(v).get(e));
-				if (! edges.contains(edge)) {
+				
+				if (e > v) {
+					edge = new Edge(v,e,this.getVertex(v).get(e));
 					edges.add(edge);
-					System.out.println(edge.toString());
 				}
+				
 			}
 		}
 		return edges;
 	}
 	
 	public String toString() {
-		String str = "" ;
+		StringBuilder str = new StringBuilder() ;
 		for (int v : this.vertex.keySet()) {
-			str += "V_" + v + " : ";
+			str.append("V_");
+			str.append(v);
+			str.append(" : ");
 			for (int e : this.vertex.get(v).keySet()) {
-				str += "(" + e + " - " + this.vertex.get(v).get(e) + ") ; " ;
+				str.append("(");
+				str.append(e);
+				str.append(" - ");
+				str.append(this.vertex.get(v).get(e));
+				str.append(") ; ") ;
 			}
-			str += "\n" ;
+			str.append("\n") ;
 		}
 		
-		return str ;
+		return str.toString() ;
 	}
 
+	
+	
+	/**
+	 * renvoi une liste des sommets, trié par ordre decroissant de leurs degre
+	 * 
+	 */
+	public int[] listDegre()
+	{
+		Set<Integer> s = this.vertex.keySet();
+		Degre[] tab = new Degre[s.size()];
+		int j=0;
+		for (Integer i : s)
+		{
+			tab[j] = new Degre(i,this.vertex.get(i).size());
+			j++;
+		}
+		
+		Arrays.sort(tab,Collections.reverseOrder(new Degre()));
+		int[] res = new int[tab.length];
+		for(int i=0;i<tab.length;i++)
+		{
+			res[i] = tab[i].vertex;
+		}
+			
+		return res;
+	}
+	
+	public List<Integer> getListVertex()
+	{
+		List<Integer> res = new ArrayList<Integer>();
+		for(int i : this.vertex.keySet())
+		{
+			res.add(i);
+		}
+		
+		return res;
+	}
+
+	public Iterator<Edge> getSortedEdgeIterator(){
+		List<Edge> l = null;
+		try {
+			l = this.getEdges();
+			System.out.println("ya sousi la");
+			Collections.sort(l, new EdgeComparator());
+			System.out.println("yésousipasla");
+			return l.iterator();
+		} catch (VertexNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public void constructGraph(List<Integer> l, List<Edge> a) {
+		
+		this.vertex = new HashMap<Integer, HashMap<Integer,Integer>>();
+		Edge e = null;
+		// on ajoute les sommets
+		for (int i = 0; i < l.size(); i++) {
+			this.addVertex(l.get(i));
+		}
+		
+		//on ajoute les aretes
+		for (int j = 0; j < a.size() ; j++) {
+			e=a.get(j);
+			try {
+				this.addEdge(e.start, e.end, e.weigth);
+			} catch (VertexNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	
+	
 }
