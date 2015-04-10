@@ -22,7 +22,7 @@ public class Main {
 		//System.out.println(g.toString());
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "test.txt");
-		Graph g = new Graph(10, (float)0.5, 100);
+		Graph g = new Graph(5, (float)0.5, 100);
 		System.out.println("graphe généré !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
@@ -36,6 +36,9 @@ public class Main {
 		HashMap<Integer, Integer> h = col.naif(g);
 		System.out.println("Coloration");
 		System.out.println(h.toString());
+		HashMap<Integer, Integer> h1 = col.runWelshPowell(g);
+		System.out.println("Coloration");
+		System.out.println(h1.toString());
 		
 	//	p.GraphToFile(g, "testk.txt");
 		

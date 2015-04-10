@@ -82,7 +82,8 @@ public class Coloration {
 		 * 
 		 */
 		
-		Set<Integer> VertexToBeColoredMaybe = new HashSet<Integer>(g.vertex.size()*2); //TREESET?
+		initColorVertex(g.vertex.size());
+		List<Integer> VertexToBeColoredMaybe = new ArrayList<Integer>(); //TREESET?
 		Iterator<Integer> iterator ;
 		//liste les couleurs utilisées jusqu'ici
 		this.listColor = new ArrayList<Integer>();
@@ -108,7 +109,7 @@ public class Coloration {
 			for(int j=i+1;j<listDegre.length;j++)
 			{
 				if(listDegre[j]!=-1 && !g.getVertex(listDegre[i]).containsKey(j))
-					VertexToBeColoredMaybe.add(j);
+					VertexToBeColoredMaybe.add(listDegre[j]);
 			}
 			
 			
@@ -119,9 +120,11 @@ public class Coloration {
 			
 				int sommet = iterator.next();
 				this.colorVertex.put(sommet, couleurActuelle);
+				VertexToBeColoredMaybe.remove(sommet);
 				listDegre[sommet] = -1;
 				for(int k : g.vertex.get(sommet).keySet())
-					VertexToBeColoredMaybe.remove(k);
+					if(VertexToBeColoredMaybe.contains(k))
+						VertexToBeColoredMaybe.remove(k);
 			
 			}
 		}
