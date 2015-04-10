@@ -108,7 +108,7 @@ public class Coloration {
 			//on cree un ensemble des sommets pouvant eventuellement prendre cette couleur aussi
 			for(int j=i+1;j<listDegre.length;j++)
 			{
-				if(listDegre[j]!=-1 && !g.getVertex(listDegre[i]).containsKey(j))
+				if(listDegre[j]!=-1 && !g.getVertex(listDegre[i]).containsKey(listDegre[j]))
 					VertexToBeColoredMaybe.add(listDegre[j]);
 			}
 			
@@ -119,10 +119,13 @@ public class Coloration {
 				int sommet = VertexToBeColoredMaybe.get(0);
 				this.colorVertex.put(sommet, couleurActuelle);
 				VertexToBeColoredMaybe.remove(0);
-				listDegre[sommet] = -1;
+				for(int k=i+1;k<listDegre.length;k++)
+					if (listDegre[k]==sommet)
+						listDegre[k] = -1;
+				
 				for(int k : g.vertex.get(sommet).keySet())
 					if(VertexToBeColoredMaybe.contains(k))
-						VertexToBeColoredMaybe.remove(k);
+						VertexToBeColoredMaybe.remove(VertexToBeColoredMaybe.indexOf(k));
 			
 			}
 			couleurActuelle++;

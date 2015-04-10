@@ -22,7 +22,7 @@ public class Main {
 		//System.out.println(g.toString());
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "test.txt");
-		Graph g = new Graph(5, (float)0.5, 100);
+		Graph g = new Graph(10, (float)0.3, 100);
 		System.out.println("graphe généré !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
