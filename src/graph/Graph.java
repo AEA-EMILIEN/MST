@@ -152,6 +152,7 @@ public class Graph {
 		return res;
 	}
 	
+	
 	public List<Integer> getListVertex()
 	{
 		List<Integer> res = new ArrayList<Integer>();
