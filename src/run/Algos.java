@@ -116,11 +116,13 @@ public class Algos implements MSTTools {
 	
 	public String meanTimeKruskal(Graph g)
 	{
-		int t=1;
+		int t=5;
 		long mean=0;
+		Graph g_test = null;
 		for(int j=0;j<t;j++)
 		{
-			long toto = timeKruskal(g);
+			g_test = g;
+			long toto = timeKruskal(g_test);
 			mean=mean + toto;
 			System.out.println(toto);
 			System.out.println(mean);
