@@ -129,22 +129,22 @@ public class Graph {
 	
 	/**
 	 * renvoi une liste des sommets, trié par ordre decroissant de leurs degre
+	 * @throws VertexNotFoundException 
 	 * 
 	 */
-	public int[] listDegre()
+	public int[] listDegre() throws VertexNotFoundException
 	{
-		Set<Integer> s = this.vertex.keySet();
-		Degre[] tab = new Degre[s.size()];
-		int j=0;
-		for (Integer i : s)
+		int s = this.vertex.size();
+		Degre[] tab = new Degre[s];
+		for (int i = 0; i < s; i++)
 		{
-			tab[j] = new Degre(i,this.vertex.get(i).size());
-			j++;
+			tab[i] = new Degre(i,this.getVertex(i).size());
 		}
 		
 		Arrays.sort(tab,Collections.reverseOrder(new Degre()));
-		int[] res = new int[tab.length];
-		for(int i=0;i<tab.length;i++)
+		
+		int[] res = new int[s];
+		for(int i=0; i < s; i++)
 		{
 			res[i] = tab[i].vertex;
 		}

@@ -1,6 +1,7 @@
 package run;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -75,6 +76,22 @@ public class Coloration {
 		return this.colorVertex;
 	}
 	
+	
+	public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException {
+		this.listColor = new ArrayList<Integer>();
+		initColorVertex(g.vertex.size());
+		
+		// liste de sommets rangés dans l'ordre décroissant
+		ArrayList<Integer> sommetsDegDec = new ArrayList(Arrays.asList(g.listDegre()));
+		// hashMap de degré de saturation -> liste de sommets
+		HashMap<Integer, ArrayList<Integer>> dsat = new HashMap<Integer, ArrayList<Integer>>() ;
+		
+		
+		
+		return this.colorVertex;
+	}
+	
+	
 	public HashMap<Integer,Integer> runWelshPowell(Graph g) throws VertexNotFoundException
 	{
 		/** Classer les sommets par ordres decroissant des degres 
@@ -134,7 +151,6 @@ public class Coloration {
 		return colorVertex;
 	}
 
-	
-	
+
 	
 }
