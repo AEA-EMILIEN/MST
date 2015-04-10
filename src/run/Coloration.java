@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import exception.VertexNotFoundException;
@@ -18,9 +17,9 @@ public class Coloration {
 	private HashMap<Integer,Integer> colorVertex = new HashMap<Integer, Integer>();
 	
 	/**
-	 * cool op tagada tsointsoin
-	 * @param listN
-	 * @return
+	 * Donne la plus petite couleur du sommet en fonction de la couleur de ses voisins, l'ajoute si elle n'existe pas
+	 * @param listN les voisins
+	 * @return la couleur
 	 */
 	public int getColor(Set<Integer> listN) {
 		int[] colors = new int[this.listColor.size()];
@@ -33,7 +32,7 @@ public class Coloration {
 			if (colorVertex.get(n)!=-1)
 				colors[colorVertex.get(n)] = 1;
 		// cherche la première couleur non utilisée
-		while ( (colors[cpt] != -1) && (cpt < colors.length) )
+		while ( (cpt < colors.length) && (colors[cpt] != -1) )
 			cpt++;
 		// si elle existe la retourne
 		if (cpt < colors.length)
@@ -46,6 +45,17 @@ public class Coloration {
 	}
 	
 	/**
+	 * Initialise la couleur des sommets
+	 * @param numberVertex la map de stockage des couleurs
+	 */
+	public void initColorVertex(int numberVertex) {
+		this.colorVertex = new HashMap<Integer, Integer>();
+		for (int v = 0; v < numberVertex; v++) 
+			this.colorVertex.put(v, -1);
+		return;
+	}
+	
+	/**
 	 * Méthode naïve de coloration de des graphes
 	 * @param g le graphe à colorer, pré-requis les poids sont à -1
 	 * @return g le graphe coloré
@@ -53,7 +63,7 @@ public class Coloration {
 	 */
 	public HashMap<Integer, Integer> naif(Graph g) throws VertexNotFoundException {
 		this.listColor = new ArrayList<Integer>();
-		this.colorVertex = new HashMap<Integer, Integer>();
+		initColorVertex(g.vertex.size());
 		
 		for (int v = 0; v < g.vertex.size(); v++) {
 			Set<Integer> listN = g.getVertex(v).keySet();
