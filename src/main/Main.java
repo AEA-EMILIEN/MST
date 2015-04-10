@@ -26,7 +26,7 @@ public class Main {
 		System.out.println("graphe généré !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
-		//System.out.println(g.toString());
+		System.out.println(g.toString());
 		//Algos alg = new Algos();
 		
 		//g = (alg.runKruskal(g));

@@ -83,8 +83,8 @@ public class Coloration {
 		 */
 		
 		initColorVertex(g.vertex.size());
-		List<Integer> VertexToBeColoredMaybe = new ArrayList<Integer>(); //TREESET?
-		Iterator<Integer> iterator ;
+		List<Integer> VertexToBeColoredMaybe = new ArrayList<Integer>(); 
+		
 		//liste les couleurs utilisées jusqu'ici
 		this.listColor = new ArrayList<Integer>();
 		
@@ -102,7 +102,7 @@ public class Coloration {
 			//couleurActuelle = getColor(g.getVertex(listDegre[i]).keySet());
 			
 			//on assigen la couleur pour le sommet i
-			this.colorVertex.put(i,couleurActuelle);
+			this.colorVertex.put(listDegre[i],couleurActuelle);
 			
 			
 			//on cree un ensemble des sommets pouvant eventuellement prendre cette couleur aussi
@@ -115,18 +115,17 @@ public class Coloration {
 			
 			//on assigne cette couleur a tous les sommets non adjacent a cette couleur
 			while(!VertexToBeColoredMaybe.isEmpty())
-			{
-				iterator = VertexToBeColoredMaybe.iterator();
-			
-				int sommet = iterator.next();
+			{		
+				int sommet = VertexToBeColoredMaybe.get(0);
 				this.colorVertex.put(sommet, couleurActuelle);
-				VertexToBeColoredMaybe.remove(sommet);
+				VertexToBeColoredMaybe.remove(0);
 				listDegre[sommet] = -1;
 				for(int k : g.vertex.get(sommet).keySet())
 					if(VertexToBeColoredMaybe.contains(k))
 						VertexToBeColoredMaybe.remove(k);
 			
 			}
+			couleurActuelle++;
 		}
 		
 		return colorVertex;
