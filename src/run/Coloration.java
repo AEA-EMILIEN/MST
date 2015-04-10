@@ -3,6 +3,7 @@ package run;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -81,15 +82,13 @@ public class Coloration {
 		 * 
 		 */
 		
-		Set<Integer> VertexToBeColoredMaybe = new HashSet<Integer>(g.vertex.size()*2);
-		
+		Set<Integer> VertexToBeColoredMaybe = new HashSet<Integer>(g.vertex.size()*2); //TREESET?
+		Iterator<Integer> iterator ;
 		//liste les couleurs utilisées jusqu'ici
 		this.listColor = new ArrayList<Integer>();
 		
-		List<Integer> neighbour = new ArrayList<Integer>();
 		
-		int maxCouleur = -1;
-		int couleurActuelle;
+		int couleurActuelle = 0 ;
 		
 		int[] listDegre = g.listDegre();
 		for(int i=0;i<listDegre.length;i++)
@@ -99,24 +98,35 @@ public class Coloration {
 				continue;
 			
 			//je trouve sa couleur
-			couleurActuelle = getColor(g.getVertex(listDegre[i]).keySet());
-			//si on ajoute une couleur supplementaire 
-			if(maxCouleur<couleurActuelle)
-				maxCouleur=couleurActuelle;
+			//couleurActuelle = getColor(g.getVertex(listDegre[i]).keySet());
 			
 			//on assigen la couleur pour le sommet i
 			this.colorVertex.put(i,couleurActuelle);
 			
 			
+			//on cree un ensemble des sommets pouvant eventuellement prendre cette couleur aussi
+			for(int j=i+1;j<listDegre.length;j++)
+			{
+				if(listDegre[j]!=-1 && !g.getVertex(listDegre[i]).containsKey(j))
+					VertexToBeColoredMaybe.add(j);
+			}
 			
 			
+			//on assigne cette couleur a tous les sommets non adjacent a cette couleur
+			while(!VertexToBeColoredMaybe.isEmpty())
+			{
+				iterator = VertexToBeColoredMaybe.iterator();
 			
+				int sommet = iterator.next();
+				this.colorVertex.put(sommet, couleurActuelle);
+				listDegre[sommet] = -1;
+				for(int k : g.vertex.get(sommet).keySet())
+					VertexToBeColoredMaybe.remove(k);
 			
-		 
-			
+			}
 		}
 		
-		return null;
+		return colorVertex;
 	}
 
 	
