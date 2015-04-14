@@ -6,13 +6,14 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import run.Algos;
 import run.Coloration;
-
 import exception.VertexNotFoundException;
-import graph.Edge;
+import graph.Vertex;
 import graph.Graph;
+import heap.Heap;
 import utils.Parser;
 
 public class Main {
@@ -22,15 +23,16 @@ public class Main {
 		//System.out.println(g.toString());
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "test.txt");
-		Graph g = new Graph(10, (float)0.3, 100);
-		System.out.println("graphe généré !");
+		Graph g = new Graph(25, (float)1.0, 100);
+		
+		//System.out.println("graphe gÃ©nÃ©rÃ© !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
-		System.out.println(g.toString());
+		//System.out.println(g.toString());
 		//Algos alg = new Algos();
 		
 		//g = (alg.runKruskal(g));
-		
+		/*
 		Coloration col = new Coloration();
 		
 		HashMap<Integer, Integer> h = col.naif(g);
@@ -39,8 +41,16 @@ public class Main {
 		HashMap<Integer, Integer> h1 = col.runWelshPowell(g);
 		System.out.println("Coloration");
 		System.out.println(h1.toString());
-		
+		*/
 	//	p.GraphToFile(g, "testk.txt");
+		
+		List<Integer> l = g.getListVertex();
+		Heap h = new Heap(l.size(),4);
+		
+		h.build_heap(l);
+		
+		System.out.println(h.toString());
+		
 		
 	}
 }

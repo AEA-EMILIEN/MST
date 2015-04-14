@@ -193,7 +193,7 @@ public class Graph {
 		for (int j = 0; j < a.size() ; j++) {
 			e=a.get(j);
 			try {
-				this.addEdge(e.start, e.end, e.weigth);
+				this.addEdge(e.start, e.end, e.weight);
 			} catch (VertexNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -203,6 +203,14 @@ public class Graph {
 		
 	}
 	
+	//renvoi le nombre d'arete contenu ds le graphe
+	public int  getNumberEdge() 
+	{
+		int res=0;
+		for(int i=0;i<this.vertex.size();i++)
+			res+=this.vertex.get(i).size();
+		return res;
+	}
 	
 	
 }
