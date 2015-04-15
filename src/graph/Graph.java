@@ -226,5 +226,13 @@ public class Graph implements Cloneable{
 		return res;
 	}
 	
+	public int getWeightTotal()
+	{
+		int res = 0;
+		for(int i=0;i<this.vertex.size();i++)
+			for(int j : this.vertex.get(i).keySet())
+				res+=this.vertex.get(i).get(j);
+		return res;
+	}
 	
 }

@@ -64,6 +64,7 @@ public class Algos implements MSTTools {
 			
 			if(g.vertex.containsKey(u.id))
 			{
+				//System.out.println(h.toString());
 				for(int v : g.vertex.get(u.id).keySet())
 				{
 					if(s.contains(v) && g.vertex.get(u.id).get(v)<h.get(v).weight)
@@ -71,7 +72,8 @@ public class Algos implements MSTTools {
 						h.set(v,g.vertex.get(u.id).get(v),u.id);
 					}
 				}
-				System.out.println(h.toString());
+				//System.out.println(h.toString());
+				//System.out.println("--------------------------------------------------------");
 			}
 		}
 		a = constructArete(res);
@@ -92,12 +94,7 @@ public class Algos implements MSTTools {
 		return a;
 	}
 
-	private void initKey(int[] key, int s) {
-		for(int i=0;i<key.length;i++)
-			key[i]=-1;
-		key[s]=0;
-		
-	}
+
 
 	
 	public Graph runKruskal(Graph g){
@@ -151,7 +148,7 @@ public class Algos implements MSTTools {
 	
 	public String meanTimeKruskal(Graph g)
 	{
-		int t=5;
+		int t=10;
 		long mean=0;
 		Graph g_test = null;
 		for(int j=0;j<t;j++)
@@ -159,12 +156,50 @@ public class Algos implements MSTTools {
 			g_test = g;
 			long toto = timeKruskal(g_test);
 			mean=mean + toto;
-			System.out.println(toto);
-			System.out.println(mean);
 		}
 		mean/=t;
 		
 		return "kruskal time:"+mean+"ns, "+(mean/1000000)+"ms or "+mean/1000000000+"s"; 
+	}
+	
+	public long timePrim(Graph g)
+	{
+		long startTime = System.nanoTime();
+		runPrim(g);
+		long endTime = System.nanoTime();
+
+		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+		return duration; 
+	}
+	
+	public String meanTimePrim(Graph g)
+	{
+		return meanTimePrim(g,4);
+	}
+	
+	public String meanTimePrim(Graph g, int d)
+	{
+		int t=10;
+		long mean=0;
+		Graph g_test = null;
+		for(int j=0;j<t;j++)
+		{
+			g_test = g;
+			long toto = timePrim(g_test);
+			mean=mean + toto;
+		}
+		mean/=t;
+		
+		return "prim time:"+mean+"ns, "+(mean/1000000)+"ms or "+mean/1000000000+"s"+ " (pour d="+d+")"; 
+	}
+	
+	public String meanTimePrimVariableD(Graph g,int nombreEssai)
+	{
+		String res = "";
+		for(int i=2;i<nombreEssai;i++)
+			res+=meanTimePrim(g, i)+"\n";
+			
+		return res;
 	}
 	
 }

@@ -23,8 +23,7 @@ public class Main {
 		//System.out.println(g.toString());
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "test.txt");
-		Graph g = new Graph(5, (float)1.0, 100);
-		
+		Graph g = new Graph(1000, (float)0.5, 10000);
 		//System.out.println("graphe gÃ©nÃ©rÃ© !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
@@ -43,16 +42,34 @@ public class Main {
 		System.out.println(h1.toString());
 		*/
 	//	p.GraphToFile(g, "testk.txt");
-		
+		/*
+		------------------------------------------------------------------------------------
+		prim et kruskal
+		-------------------------------------------------------------------------------------
+		*/
+		/*
 		Algos alg = new Algos();
-		System.out.println(g.toString());
+		//System.out.println(g.toString());
 		
-		Graph g1 = alg.runKruskal(g);
-		System.out.println("kruskal\n"+g1.toString());
+		//Graph g1 = alg.runKruskal(g);
+		//System.out.println("kruskal:"+g1.getWeightTotal());
+		//System.out.println(g1.toString());
 		
-		g1 = alg.runPrim(g);
-		System.out.println("prim\n" +g1.toString());
-		
+		//g1 = alg.runPrim(g);
+		System.out.println("prim:"+g1.getWeightTotal());
+		//System.out.println(g1.toString());
+		-------------------------------------------------------------------------------------
+		*/
+		/*
+		 -------------------------------------------------------------------------------------
+		 time prim and kruskal
+		 -----------------------------------------------------------------------------------
+		 */
+		Algos alg = new Algos();
+		System.out.println(alg.meanTimeKruskal(g));
+		System.out.println(alg.meanTimePrimVariableD(g, 10));
+		 
+		 
 		
 		
 		

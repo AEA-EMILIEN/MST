@@ -60,7 +60,7 @@ public class Heap {
 		int tiniest = index;
 		
 		for(int i=0;i<d;i++)
-			if(children[i] < this.indexLastElement && this.tab[children[i]].weight<this.tab[tiniest].weight)
+			if(children[i] <= this.indexLastElement && this.tab[children[i]].weight<this.tab[tiniest].weight)
 				tiniest = children[i];
 		
 		if(tiniest!=index)
@@ -90,8 +90,7 @@ public class Heap {
 		this.tab[0]=null;
 		swap(0,this.indexLastElement);
 		this.indexLastElement--;
-		for(int i=this.indexLastElement;i>=0;i--)
-			this.min_heapify(i);
+		this.min_heapify(0);
 	}
 
 	//return the index of the father of the index in parameter
@@ -230,9 +229,21 @@ public class Heap {
 			{
 				this.tab[i].weight=weight;
 				this.tab[i].pere=pere;
-				for(int j=this.indexLastElement;j>=0;j--)
-					this.min_heapify(j);
+				
+				int oldFatherVal=0;
+				int oldFatherInd=father(i);
+				int newFatherVal=1;
+				
+				while(oldFatherVal!=newFatherVal)
+				{
+					oldFatherVal=this.tab[father(i)].weight;
+					min_heapify(father(i));
+					newFatherVal=this.tab[father(i)].weight;
+					i=father(i);
+					
+				}
+				
 				break;
 			}
 	}
-}
+}
