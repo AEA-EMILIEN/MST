@@ -1,10 +1,13 @@
 package run;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeSet;
 
 
 
@@ -15,6 +18,7 @@ import java.util.Set;
 import set.DisjointSets;
 import graph.Edge;
 import graph.Graph;
+import graph.Vertex;
 import heap.Heap;
 
 public class Algos implements MSTTools {
@@ -34,8 +38,8 @@ public class Algos implements MSTTools {
 				to first vertex is 0). The key value assigned to all other vertices
 				is INF (infinite).
 		3) While Min Heap is not empty, do following
-		�..a) Extract the min value node from Min Heap. Let the extracted vertex be u.
-		�..b) For every adjacent vertex v of u, check if v is in Min Heap (not yet 
+		..a) Extract the min value node from Min Heap. Let the extracted vertex be u.
+		..b) For every adjacent vertex v of u, check if v is in Min Heap (not yet 
 				included in MST). If v is in Min Heap and its key value is more than 
 				weight of u-v, then update the key value of v as weight of u-v.
 		*/
@@ -43,30 +47,49 @@ public class Algos implements MSTTools {
 		List<Integer> l = g.getListVertex();
 		List<Edge> a = new ArrayList<Edge>();
 		
-		Set<Integer> s = g.vertex.keySet();
-		
+		Set<Integer> s = ((HashMap<Integer, HashMap<Integer, Integer>>)(g.vertex.clone())).keySet();
+		Set<Vertex> res = new HashSet<Vertex>();
 		Heap h = new Heap(g.vertex.size(),d);
 		h.build_heap_prim(l);
 		
-		int u = -1;
+		Set<Integer> tmp= null;
+		
+		Vertex u = null;
 		while(!s.isEmpty())
 		{
+			//on trouve le plus petit sommet
 			u = h.extract_min();
-			s.remove(u);
+			s.remove(u.id);
+			res.add(u);
 			
-			for(int v : g.vertex.get(u).keySet())
+			if(g.vertex.containsKey(u.id))
 			{
-				if(s.contains(v) && g.vertex.get(u).get(v)<h.get(v).weight)
+				for(int v : g.vertex.get(u.id).keySet())
 				{
-					h.set(v,g.vertex.get(u).get(v));
-					//a.add(new Edge(u,v,))
+					if(s.contains(v) && g.vertex.get(u.id).get(v)<h.get(v).weight)
+					{
+						h.set(v,g.vertex.get(u.id).get(v),u.id);
+					}
 				}
+				System.out.println(h.toString());
 			}
 		}
+		a = constructArete(res);
+		Graph g1 = new Graph();
+		g1.constructGraph(l, a);
 		
+		return g1;
+	}
+
+	private List<Edge> constructArete(Set<Vertex> res) {
+		List<Edge> a = new ArrayList<Edge>();
 		
-		
-		return null;
+		for(Vertex v : res)
+		{
+			if(v.pere!=-1)
+				a.add(new Edge(v.id, v.pere, v.weight));
+		}
+		return a;
 	}
 
 	private void initKey(int[] key, int s) {
@@ -111,8 +134,9 @@ public class Algos implements MSTTools {
 			}
 			
 		}
-		g.constructGraph(l, a);
-		return g;
+		Graph g1=new Graph();
+		g1.constructGraph(l, a);
+		return g1;
 	}
 
 	public long timeKruskal(Graph g)

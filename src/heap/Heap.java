@@ -90,7 +90,8 @@ public class Heap {
 		this.tab[0]=null;
 		swap(0,this.indexLastElement);
 		this.indexLastElement--;
-		min_heapify(0);
+		for(int i=this.indexLastElement;i>=0;i--)
+			this.min_heapify(i);
 	}
 
 	//return the index of the father of the index in parameter
@@ -164,9 +165,9 @@ public class Heap {
 	}
 	
 	
-	public int extract_min()
+	public Vertex extract_min()
 	{
-		int res = this.tab[0].id;
+		Vertex res = this.tab[0];
 		delete();
 		return res;
 	}
@@ -174,7 +175,8 @@ public class Heap {
 	
 	@Override
 	public String toString()
-	{
+	{	if(this.indexLastElement<0)
+			return "";
 		return this.toString(0,0);
 	}
 	
@@ -220,18 +222,17 @@ public class Heap {
 		return -1;
 	}
 	
-	public void set(int v,int weight)
+	public void set(int v,int weight,int pere)
 	{
+		
 		for(int i=0;i<=this.indexLastElement;i++)
 			if(this.tab[i].id==v)
 			{
 				this.tab[i].weight=weight;
-				this.min_heapify(i);
+				this.tab[i].pere=pere;
+				for(int j=this.indexLastElement;j>=0;j--)
+					this.min_heapify(j);
 				break;
 			}
-		
 	}
-	
-	
-	
 }

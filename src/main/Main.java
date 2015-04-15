@@ -23,7 +23,7 @@ public class Main {
 		//System.out.println(g.toString());
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "test.txt");
-		Graph g = new Graph(25, (float)1.0, 100);
+		Graph g = new Graph(5, (float)1.0, 100);
 		
 		//System.out.println("graphe gÃ©nÃ©rÃ© !");
 		//Parser p = new Parser();
@@ -44,12 +44,16 @@ public class Main {
 		*/
 	//	p.GraphToFile(g, "testk.txt");
 		
-		List<Integer> l = g.getListVertex();
-		Heap h = new Heap(l.size(),4);
+		Algos alg = new Algos();
+		System.out.println(g.toString());
 		
-		h.build_heap(l);
+		Graph g1 = alg.runKruskal(g);
+		System.out.println("kruskal\n"+g1.toString());
 		
-		System.out.println(h.toString());
+		g1 = alg.runPrim(g);
+		System.out.println("prim\n" +g1.toString());
+		
+		
 		
 		
 	}

@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-
 import exception.VertexNotFoundException;
 
-public class Graph {
+public class Graph implements Cloneable{
 
 	public HashMap<Integer, HashMap<Integer, Integer>> vertex;
 	
@@ -45,6 +43,10 @@ public class Graph {
 		}
 	}
 	
+	public Graph(Graph g) {
+		this.vertex=g.vertex;
+	}
+
 	private boolean[][] matriceAlea(int n,  float p, Random rand) {
 		boolean[][] matrix = new boolean[n][n];
 		float r ;
@@ -59,6 +61,23 @@ public class Graph {
 		}
 		return matrix;
 	}
+	
+	@Override
+	public Object clone()
+	{
+		Graph g= null;
+		try
+		{
+			g = (Graph) super.clone();
+		}
+		catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
+		
+		return g;
+	}
+	
 	public HashMap<Integer, Integer> getVertex(int v) throws VertexNotFoundException {
 		if (this.vertex.containsKey(v)) 
 			return this.vertex.get(v);
@@ -168,9 +187,7 @@ public class Graph {
 		List<Edge> l = null;
 		try {
 			l = this.getEdges();
-			System.out.println("ya sousi la");
 			Collections.sort(l, new EdgeComparator());
-			System.out.println("yésousipasla");
 			return l.iterator();
 		} catch (VertexNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -195,12 +212,9 @@ public class Graph {
 			try {
 				this.addEdge(e.start, e.end, e.weight);
 			} catch (VertexNotFoundException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
-		
-		
 	}
 	
 	//renvoi le nombre d'arete contenu ds le graphe
