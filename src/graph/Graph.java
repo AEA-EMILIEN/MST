@@ -12,7 +12,6 @@ import exception.VertexNotFoundException;
 public class Graph implements Cloneable{
 
 	public HashMap<Integer, HashMap<Integer, Integer>> vertex;
-	public String tempsGeneration;
 	
 	public Graph() {
 		this.vertex = new HashMap<Integer, HashMap<Integer,Integer>>();

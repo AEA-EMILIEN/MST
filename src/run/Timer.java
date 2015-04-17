@@ -106,8 +106,8 @@ public class Timer {
 			{
 				System.out.println(j+" "+i);
 				timeG.append(timeGraph(j,i,100000)+" ");
-				timePrim.append(alg.meanTimePrim(g)+" ");
-				timeKruskal.append(alg.meanTimeKruskal(g)+" ");
+				timePrim.append(alg.meanTimePrim(j,i,100000)+" ");
+				timeKruskal.append(alg.meanTimeKruskal(j,i,100000)+" ");
 			}
 			timeG.append("\n");
 			timePrim.append("\n");
