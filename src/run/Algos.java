@@ -15,6 +15,7 @@ import java.util.TreeSet;
 
 import java.util.Set;
 
+import exception.VertexNotFoundException;
 import set.DisjointSets;
 import graph.Edge;
 import graph.Graph;
@@ -146,14 +147,22 @@ public class Algos implements MSTTools {
 		return duration; 
 	}
 	
-	public String meanTimeKruskal(Graph g)
+	public String meanTimeKruskal(int n,float p, int N)
 	{
-		int t=3;
+		int t=1;
 		long mean=0;
 		Graph g_test = null;
 		for(int j=0;j<t;j++)
 		{
-			g_test = g;
+			try {
+				g_test = new Graph(n,p,N);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (VertexNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			long toto = timeKruskal(g_test);
 			mean=mean + toto;
 		}
@@ -172,19 +181,27 @@ public class Algos implements MSTTools {
 		return duration; 
 	}
 	
-	public String meanTimePrim(Graph g)
+	public String meanTimePrim(int n,float p,int N)
 	{
-		return meanTimePrim(g,4);
+		return meanTimePrim(n,p,N,4);
 	}
 	
-	public String meanTimePrim(Graph g, int d)
+	public String meanTimePrim(int n,float p, int N, int d)
 	{
-		int t=3;
+		int t=50;
 		long mean=0;
 		Graph g_test = null;
 		for(int j=0;j<t;j++)
 		{
-			g_test = g;
+			try {
+				g_test = new Graph(n,p,N);
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (VertexNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			long toto = timePrim(g_test);
 			mean=mean + toto;
 		}
@@ -193,13 +210,8 @@ public class Algos implements MSTTools {
 		return (mean/1000000)+""; 
 	}
 	
-	public String meanTimePrimVariableD(Graph g,int nombreEssai)
-	{
-		String res = "";
-		for(int i=2;i<nombreEssai;i++)
-			res+=meanTimePrim(g, i)+"\n";
-			
-		return res;
-	}
+	
+	
+	
 	
 }
