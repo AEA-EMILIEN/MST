@@ -10,6 +10,7 @@ import java.util.List;
 
 import run.Algos;
 import run.Coloration;
+import run.Timer;
 import exception.VertexNotFoundException;
 import graph.Vertex;
 import graph.Graph;
@@ -23,7 +24,9 @@ public class Main {
 		//System.out.println(g.toString());
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "test.txt");
-		Graph g = new Graph(1000, (float)0.5, 10000);
+	//	Graph g = new Graph(3000, (float)0.9, 100000);
+
+		
 		//System.out.println("graphe gÃ©nÃ©rÃ© !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
@@ -65,11 +68,14 @@ public class Main {
 		 time prim and kruskal
 		 -----------------------------------------------------------------------------------
 		 */
-		Algos alg = new Algos();
-		System.out.println(alg.meanTimeKruskal(g));
-		System.out.println(alg.meanTimePrimVariableD(g, 10));
+		//System.out.println(g.toString());
+		//System.out.println(alg.meanTimeKruskal(g));
+		//System.out.println(alg.meanTimePrim(g));
 		 
-		 
+		 //------------------------------------------------
+		
+		Timer t = new Timer();
+		t.timeMST();
 		
 		
 		

@@ -148,7 +148,7 @@ public class Algos implements MSTTools {
 	
 	public String meanTimeKruskal(Graph g)
 	{
-		int t=10;
+		int t=3;
 		long mean=0;
 		Graph g_test = null;
 		for(int j=0;j<t;j++)
@@ -159,7 +159,7 @@ public class Algos implements MSTTools {
 		}
 		mean/=t;
 		
-		return "kruskal time:"+mean+"ns, "+(mean/1000000)+"ms or "+mean/1000000000+"s"; 
+		return (mean/1000000)+""; 
 	}
 	
 	public long timePrim(Graph g)
@@ -179,7 +179,7 @@ public class Algos implements MSTTools {
 	
 	public String meanTimePrim(Graph g, int d)
 	{
-		int t=10;
+		int t=3;
 		long mean=0;
 		Graph g_test = null;
 		for(int j=0;j<t;j++)
@@ -190,7 +190,7 @@ public class Algos implements MSTTools {
 		}
 		mean/=t;
 		
-		return "prim time:"+mean+"ns, "+(mean/1000000)+"ms or "+mean/1000000000+"s"+ " (pour d="+d+")"; 
+		return (mean/1000000)+""; 
 	}
 	
 	public String meanTimePrimVariableD(Graph g,int nombreEssai)

@@ -12,6 +12,7 @@ import exception.VertexNotFoundException;
 public class Graph implements Cloneable{
 
 	public HashMap<Integer, HashMap<Integer, Integer>> vertex;
+	public String tempsGeneration;
 	
 	public Graph() {
 		this.vertex = new HashMap<Integer, HashMap<Integer,Integer>>();
@@ -43,9 +44,7 @@ public class Graph implements Cloneable{
 		}
 	}
 	
-	public Graph(Graph g) {
-		this.vertex=g.vertex;
-	}
+	
 
 	private boolean[][] matriceAlea(int n,  float p, Random rand) {
 		boolean[][] matrix = new boolean[n][n];
