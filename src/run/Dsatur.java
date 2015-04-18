@@ -1,11 +1,13 @@
 package run;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import exception.VertexNotFoundException;
+import graph.Degre;
 import graph.Graph;
 
 public class Dsatur extends Coloration {
@@ -15,7 +17,7 @@ public class Dsatur extends Coloration {
 	private int nbVertex;
 	private int[] vertexDD;
 	// hashMap sommet -> degré de saturation
-	private HashMap<Integer,Integer> vertexDS = new HashMap<Integer, Integer>() ;
+	private int[] vertexDS;
 	// liste des sommets de degré de saturation maximal
 	private ArrayList<Integer> maxSatVertex = new ArrayList<Integer>();
 	// compteur de sommets restant à colorer
@@ -27,6 +29,7 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 		/// PHASE D'INITIALISATION
 		this.listColor = new ArrayList<Integer>();
 		nbVertex = g.vertex.size();
+		this.vertexDS = new int[nbVertex];
 		initColorVertex(nbVertex);		
 		cptToColor = nbVertex;
 		
@@ -37,7 +40,7 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 		vertexDD = g.listDegre();
 		
 		for (int v = 0; v < nbVertex; v++) 
-			vertexDS.put(v, 0);
+			vertexDS[v] = 0;
 		
 		// couleur courante
 		int color = 0;
@@ -46,19 +49,20 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 		int vertex = vertexDD[0];
 		
 		// vertexDD donne le degré des sommets selon leur indice maintenant
-		vertexDD = transform();
+		vertexDD = getDegre(g);
 		
 		this.colorVertex.put(vertex, color);
 		this.listColor.add(color);
 		this.cptToColor--;
 		this.vertexDD[vertex] = -1; //pour ne plus être comparé
+		reloadMaxSat();
 		
 		// mise à jour des degré de saturation des voisins
 		majDS(g.getVertex(vertex).keySet(), color);
 		
 		while (cptToColor > 0) {
 			vertex = chooseMaxSat();
-			System.out.println(vertex);
+			majMaxSat(vertex);
 			Set<Integer> listN = g.getVertex(vertex).keySet();
 			color = color(vertex, listN);
 			cptToColor--;
@@ -67,6 +71,56 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 		}
 		
 		return this.colorVertex;
+	}
+	
+	/**
+	 * Défait vertex de MaxSatVertex et le met à -1 dans vertexDS. Recalcule MaxSatVertex si c'était le seul
+	 * @param vertex
+	 */
+	private void majMaxSat(int vertex) {
+		if (maxSatVertex.size() == 1) {
+			maxSatVertex.remove(maxSatVertex.indexOf(vertex));
+			maxSat = -1 ;
+			vertexDS[vertex] = -1;
+			reloadMaxSat();
+		}
+		else if (maxSatVertex.size() > 1) {
+			maxSatVertex.remove(maxSatVertex.indexOf(vertex));
+			vertexDS[vertex] = -1;
+		}
+		else
+			System.out.println(""+vertex + "inexistant dans maxSatVertex");
+}
+
+	/**
+	 * Dans le cas où MaxSat est vide il faut rechercher le maximum de saturaion
+	 */
+	private void reloadMaxSat() {
+		this.maxSat = 0;
+		for ( int i = 0; i < nbVertex; i++) {
+			if (vertexDS[i] > maxSat) {
+				maxSatVertex = new ArrayList<Integer>();
+				maxSatVertex.add(i);
+				maxSat = vertexDS[i];
+			}
+			else if (vertexDS[i] == maxSat) 
+				maxSatVertex.add(i);
+		}
+		return;
+	}
+		
+
+	/**
+	 * Renvoie le tableau des degrés des sommets, l'indice étant le numéro de sommet et la valeur étant le degré
+	 * @param g
+	 * @return
+	 * @throws VertexNotFoundException
+	 */
+	private int[] getDegre(Graph g) throws VertexNotFoundException {
+		int[] tab = new int[nbVertex];
+		for (int i = 0; i < nbVertex; i++) 
+			tab[i] = g.getVertex(i).size();
+		return tab;
 	}
 
 	/**
@@ -78,8 +132,6 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 	private int color(int vertex, Set<Integer> listN) {
 		int color = getColor(listN);
 		this.colorVertex.put(vertex, color);
-		//for (int n: listN) 
-			//neigthColor.get(n).add(color);
 		return color;
 	}
 	
@@ -88,11 +140,10 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 	 * @return le sommet avec le plus grand degré de saturation
 	 */
 	private int chooseMaxSat() {
-		System.out.println("size maxSat : " + maxSatVertex.size() + " " );
 		if (maxSatVertex.size() == 1)
 			return maxSatVertex.get(0);
 		else 
-			return serchMaxDegre();
+			return searchMaxDegre();
 	}
 
 	/**
@@ -101,7 +152,7 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 	 * @param vertexDD
 	 * @return le sommet de degré et degré de saturation maximaux
 	 */
-	private int serchMaxDegre() {
+	private int searchMaxDegre() {
 		int max = 0;
 		int indice = -1;
 		for (int vertex : maxSatVertex) {
@@ -126,36 +177,11 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 	private void majDS(Set<Integer> listN, int color) throws VertexNotFoundException {
 		int tmp = 0;
 		for (int n : listN) { // pour chaque voisin ...
-			if ( ! neigthColor.get(n).contains(color)) { // si aucun de ses voisins ne contient la couleur ajoutée
-				tmp = (vertexDS.get(n)) + 1; // incrémente son DS
-				vertexDS.put(n, tmp);
-				System.out.println("majDS DS de " + n + " vaut "+ vertexDS.get(n));
+			if ( ( ! neigthColor.get(n).contains(color) ) && (vertexDS[n] != -1) ) { // si aucun de ses voisins ne contient la couleur ajoutée
+				vertexDS[n] = tmp++; // incrémente son DS
 				neigthColor.get(n).add(color); //ajoute la couleur dans la table du voisin
-				
-				if (tmp > maxSat) {
-					maxSat = tmp;
-					maxSatVertex = new ArrayList<Integer>();
-					maxSatVertex.add(n);
-				}
-				else if (tmp == maxSat) 
-					maxSatVertex.add(n);
 			}
 		}
-	return;
-}
-
-	/**
-	 * range le tableau l'indice du tableau étant le numéro du sommet, et sa valeur son degré
-	 * @param vertexDD le tableau d'entrée avec les sommets rangé par ordre décroissant de degré
-	 * @return le tableau modifié
-	 */
-	private int[] transform() {
-		int[] newDD = new int[vertexDD.length];
-		int i = 0;
-		for (int v : vertexDD) {
-			newDD[i] = v;
-			i++;
-		}
-	return newDD;
-}
+		return;
+	} 
 }
