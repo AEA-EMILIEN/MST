@@ -11,7 +11,9 @@ import java.util.List;
 import run.Algos;
 import run.Coloration;
 import run.Dsatur;
+import run.Naif;
 import run.Timer;
+import run.WelshPowell;
 import exception.VertexNotFoundException;
 import graph.Vertex;
 import graph.Graph;
@@ -51,10 +53,14 @@ public class Main {
 		HashMap<Integer, Integer> h = ((Dsatur) col).dsatur(g);
 		System.out.println("Coloration Dsature");
 		System.out.println(h.toString());
-		h = col.naif(g);
+		
+		col = new Naif();
+		h = ((Naif) col).naif(g);
 		System.out.println("Coloration Naif");
 		System.out.println(h.toString());
-		h = col.runWelshPowell(g);
+		
+		col = new WelshPowell();
+		h = ((WelshPowell) col).runWelshPowell(g);
 		System.out.println("Coloration WelshPowel");
 		System.out.println(h.toString());
 	//	p.GraphToFile(g, "testk.txt");
