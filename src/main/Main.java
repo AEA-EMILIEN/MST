@@ -10,6 +10,7 @@ import java.util.List;
 
 import run.Algos;
 import run.Coloration;
+import run.Dsatur;
 import run.Timer;
 import exception.VertexNotFoundException;
 import graph.Vertex;
@@ -44,6 +45,13 @@ public class Main {
 		System.out.println("Coloration");
 		System.out.println(h1.toString());
 		*/
+		Graph g = new Graph(4, (float)0.5, 10);
+		System.out.println(g.toString());
+		Coloration col = new Dsatur();
+		HashMap<Integer, Integer> h = ((Dsatur) col).dsatur(g);
+		System.out.println("Coloration");
+		System.out.println(h.toString());
+		
 	//	p.GraphToFile(g, "testk.txt");
 		/*
 		------------------------------------------------------------------------------------
@@ -74,8 +82,8 @@ public class Main {
 		 
 		 //------------------------------------------------
 		
-		Timer t = new Timer();
-		t.timeMST();
+		//Timer t = new Timer();
+		//t.timeMST();
 		
 		
 		
