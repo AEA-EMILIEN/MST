@@ -48,13 +48,21 @@ public class Graph implements Cloneable{
 	private boolean[][] matriceAlea(int n,  float p, Random rand) {
 		boolean[][] matrix = new boolean[n][n];
 		float r ;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j<i; j++) {
+		int i = 0, j = 0;
+		boolean oneMin = false ; // vérifier qu'un sommet à au moins un voisin sinon lui en attribue un au hasard
+		for (i = 0; i < n; i++) {
+			oneMin = false;
+			for (j = 0; j<i; j++) {
 				r = rand.nextFloat();
 				if (r <= p) 
 					matrix[i][j] = true; 
 				else
 					matrix[i][j] = false;
+				oneMin = oneMin || matrix[i][j];
+			}
+			if (!oneMin && i>0) { //si un sommet n'a pas de voisin
+				j = rand.nextInt(i);
+				matrix[i][j] = true;
 			}
 		}
 		return matrix;
