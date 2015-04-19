@@ -68,6 +68,20 @@ public class WelshPowell extends Coloration {
 		return colorVertex;
 	}
 
+	public long timeWP(Graph g) {
+		long startTime = System.nanoTime();
+		try {
+			runWelshPowell(g);
+		} catch (VertexNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+
+		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+		return duration/1000000; 
+	}
+
 
 	
 }

@@ -47,6 +47,8 @@ public class Main {
 		System.out.println("Coloration");
 		System.out.println(h1.toString());
 		*/
+		
+		/*
 		Graph g = new Graph(10, (float)0.7, 10);
 		System.out.println(g.toString());
 		Coloration col = new Dsatur();
@@ -64,7 +66,7 @@ public class Main {
 		System.out.println("Coloration WelshPowel");
 		System.out.println(h.toString());
 	//	p.GraphToFile(g, "testk.txt");
-		/*
+		*//*
 		------------------------------------------------------------------------------------
 		prim et kruskal
 		-------------------------------------------------------------------------------------
@@ -93,8 +95,8 @@ public class Main {
 		 
 		 //------------------------------------------------
 		
-		//Timer t = new Timer();
-		//t.timeMST();
+		Timer t = new Timer();
+		t.timeAndNumberColoration();
 		
 		
 		

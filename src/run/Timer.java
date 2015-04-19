@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.util.ArrayList;
-import java.util.List;
 
 import exception.VertexNotFoundException;
 import graph.Graph;
@@ -17,23 +15,15 @@ public class Timer {
 
 	public Algos alg;
 	public Graph g;
-	public String timeG;
 	
-	public Timer(int n, float p, int N) throws IllegalArgumentException, VertexNotFoundException
-	{
-		this.timeG = timeGraph(n,p,N);
-		alg = new Algos();
-		
-	}
 	
 	public Timer()
 	{
 		this.alg=new Algos();
-		this.timeG="";
 		this.g=null;
 	}
 	
-	public String timeGraph(int n,float p, int N)
+	public long timeGraph(int n,float p, int N)
 	{
 		long startTime = System.nanoTime();
 		
@@ -49,7 +39,7 @@ public class Timer {
 		long endTime = System.nanoTime();
 
 		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-		return duration/1000000+""; 
+		return duration/1000000; 
 	}
 	
 	
@@ -76,6 +66,7 @@ public class Timer {
 		StringBuilder timeG = new StringBuilder();
 		StringBuilder timePrim = new StringBuilder();
 		StringBuilder timeKruskal = new StringBuilder();
+		
 		
 		
 		int min = 50;
@@ -105,9 +96,19 @@ public class Timer {
 			for(int j=min;j<=max;j+=increment)
 			{
 				System.out.println(j+" "+i);
-				timeG.append(timeGraph(j,i,100000)+" ");
-				timePrim.append(alg.meanTimePrim(j,i,100000)+" ");
-				timeKruskal.append(alg.meanTimeKruskal(j,i,100000)+" ");
+				
+				long meanG=0;
+				long meanK=0;
+				long meanP=0;
+				for(int k=0;k<50;k++)
+				{
+					meanG+=timeGraph(j,i,100000);
+					meanK+=alg.timeKruskal(this.g);
+					meanP+=alg.timePrim(this.g);
+				}
+				timeG.append(meanG/50+" ");
+				timePrim.append(meanP/50+" ");
+				timeKruskal.append(meanK/50+" ");
 			}
 			timeG.append("\n");
 			timePrim.append("\n");
@@ -119,8 +120,84 @@ public class Timer {
 		System.out.println(timeKruskal);
 		
 		writeToFile("generationGraphTime",timeG.toString());
-		writeToFile("Prim",timeG.toString());
-		writeToFile("KruskalTime",timeG.toString());
+		writeToFile("Prim",timePrim.toString());
+		writeToFile("KruskalTime",timeKruskal.toString());
+	}
+	
+	public void timeAndNumberColoration()
+	{
+		StringBuilder timeNaif = new StringBuilder();
+		StringBuilder timeWP = new StringBuilder();
+		StringBuilder timeDS = new StringBuilder();
+		
+		StringBuilder ColorNaif = new StringBuilder();
+		StringBuilder ColorWP = new StringBuilder();
+		StringBuilder ColorDS = new StringBuilder(); 
+		
+		Naif naif = new Naif();
+		Dsatur ds = new Dsatur();
+		WelshPowell wp = new WelshPowell();
+		
+		int min = 50;
+		int max = 500;
+		int increment = 50;
+		
+		
+		timeNaif.append(min+" ");
+		timeNaif.append(max+" ");
+		timeNaif.append(increment);
+		timeNaif.append("\n");
+		
+		timeWP.append(min+" ");
+		timeWP.append(max+" ");
+		timeWP.append(increment);
+		timeWP.append("\n");
+		
+		timeDS.append(min+" ");
+		timeDS.append(max+" ");
+		timeDS.append(increment);
+		timeDS.append("\n");
+		
+		timeDS.append(min+" ");
+		timeDS.append(max+" ");
+		timeDS.append(increment);
+		timeDS.append("\n");
+		
+		
+		float[] p = {(float) 0.1,(float) 0.3,(float) 0.5,(float) .7,(float) .9};
+		
+		for(float i : p)
+		{
+			for(int j=min;j<=max;j+=increment)
+			{
+				System.out.println(j+" "+i);
+				
+				long meanNaif=0;
+				long meanDS=0;
+				long meanWP=0;
+				for(int k=0;k<50;k++)
+				{
+					timeGraph(j,i,100000);
+					meanNaif+=naif.timeNaif(this.g);
+					meanWP+=wp.timeWP(this.g);
+					meanDS+=ds.timeDS(this.g);
+				}
+				timeNaif.append(meanNaif/50+" ");
+				timeWP.append(meanWP/50+" ");
+				timeDS.append(meanDS/50+" ");
+			}
+			timeNaif.append("\n");
+			timeWP.append("\n");
+			timeDS.append("\n");
+		}
+		
+		System.out.println(timeNaif);
+		System.out.println(timeWP);
+		System.out.println(timeDS);
+		
+		writeToFile("TimeColorationNaif",timeNaif.toString());
+		writeToFile("TimeColorationWelshPowell",timeWP.toString());
+		writeToFile("TimeColorationDsatur",timeDS.toString());
 	}
 	
 
