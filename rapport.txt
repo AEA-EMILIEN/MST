@@ -1,0 +1,25 @@
+TP 3 : Algorithmes de coloriage
+Emilie Allart & Julien Rousse
+
+
+Nous avons repris la structure du graĥe du tp2.
+hashMap<Integer,HashMap<Integer,Integer> qui pour un sommet renvoie une hashmap donnant pour chaque voisin son poids.
+
+Dans notre problème nous avons considéré que les sommets sont représenter par des nombre entier partant de 0.
+Mais il serait possible de faire un parser en entrée qui prend n'importe quelle représentation d'un sommet et la transforme en entier unique, pour s'accorder au programme.
+
+Par contre, nous forçons les graphe à être connexe pour que nos algorithmes fonctionnent au mieux. 
+
+Nous avons utilisé une classe abstraite Coloration qui est extends par les 3 algo Naif, Dsatur, WelshPowell
+
+Les méthodes implémentées sont :
+
+- Naïf : se base sur des HashMap et des ArraList. Le plus rapide des 3 algos.
+
+- WelshPowell : en moyenne plus efficace (utlise moins de couleur) que l'algo naïf. 2 fois plus lent que le naïf environ
+
+- Dsatur : aussi efficace que WelshPowell , mais 3 fois plus lent que le naïf environ.
+
+vous pourrez voir dans le dossier data les fichiers de performances. 
+ColorationPerformance : représente le temps pris par l'algo pour un nombre de sommets donnée
+ColorationResultat : représente le nombre de couleur trouvé par nombre de sommet
