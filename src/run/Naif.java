@@ -29,5 +29,19 @@ public class Naif extends Coloration {
 		return this.colorVertex;
 	}
 
+	public long timeNaif(Graph g) {
+		long startTime = System.nanoTime();
+		try {
+			naif(g);
+		} catch (VertexNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+
+		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+		return duration/1000000; 
+	}
+
 
 }

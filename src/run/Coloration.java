@@ -1,14 +1,8 @@
 package run;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-
-import exception.VertexNotFoundException;
-import graph.Graph;
 
 public abstract class Coloration {
 	
@@ -57,7 +51,13 @@ public abstract class Coloration {
 		return;
 	}
 	
-	
+	/**
+	 * Indique le nombre de couleurs utilisées
+	 * @return le nombre de couleur
+	 */
+	public int nbColor() {
+		return this.colorVertex.size();
+	}
 
 	
 	

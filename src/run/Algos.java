@@ -144,12 +144,12 @@ public class Algos implements MSTTools {
 		long endTime = System.nanoTime();
 
 		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-		return duration; 
+		return duration/1000000; 
 	}
 	
 	public String meanTimeKruskal(int n,float p, int N)
 	{
-		int t=1;
+		int t=50;
 		long mean=0;
 		Graph g_test = null;
 		for(int j=0;j<t;j++)
@@ -168,7 +168,7 @@ public class Algos implements MSTTools {
 		}
 		mean/=t;
 		
-		return (mean/1000000)+""; 
+		return mean+""; 
 	}
 	
 	public long timePrim(Graph g)
@@ -178,7 +178,7 @@ public class Algos implements MSTTools {
 		long endTime = System.nanoTime();
 
 		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
-		return duration; 
+		return duration/1000000; 
 	}
 	
 	public String meanTimePrim(int n,float p,int N)
@@ -207,8 +207,10 @@ public class Algos implements MSTTools {
 		}
 		mean/=t;
 		
-		return (mean/1000000)+""; 
+		return mean+""; 
 	}
+
+	
 	
 	
 	

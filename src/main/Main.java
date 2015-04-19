@@ -1,36 +1,19 @@
 package main;
 
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import run.Algos;
-import run.Coloration;
-import run.Dsatur;
-import run.Naif;
 import run.Timer;
-import run.WelshPowell;
 import exception.VertexNotFoundException;
-import graph.Vertex;
-import graph.Graph;
-import heap.Heap;
-import utils.Parser;
 
 public class Main {
 
 	public static void main(String[] args) throws VertexNotFoundException, FileNotFoundException, InterruptedException {
-		//Graph g = new Parser().FileToGraph("data/1000x1000.gph");
-		//System.out.println(g.toString());
+
 		//Parser p = new Parser();
-		//p.GraphToFile(g, "test.txt");
-	//	Graph g = new Graph(3000, (float)0.9, 100000);
+		//p.GraphToFile(g, "data/test.txt");
+		//Graph g = new Graph(3000, (float)0.9, 100000);
 
 		
-		//System.out.println("graphe gÃ©nÃ©rÃ© !");
+		//System.out.println("graphe généré !");
 		//Parser p = new Parser();
 		//p.GraphToFile(g, "alea.txt");
 		//System.out.println(g.toString());
@@ -48,8 +31,8 @@ public class Main {
 		System.out.println(h1.toString());
 		*/
 		
-		
-		Graph g = new Graph(50, (float)0.3, 100000);
+		/*
+		Graph g = new Graph(10, (float)0.7, 10);
 		System.out.println(g.toString());
 		Coloration col = new Naif();
 		HashMap<Integer, Integer> h = ((Naif) col).naif(g);
@@ -66,7 +49,7 @@ public class Main {
 		System.out.println("Coloration WelshPowel");
 		System.out.println(h.toString());
 	//	p.GraphToFile(g, "testk.txt");
-		/*
+		*//*
 		------------------------------------------------------------------------------------
 		prim et kruskal
 		-------------------------------------------------------------------------------------
@@ -95,8 +78,8 @@ public class Main {
 		 
 		 //------------------------------------------------
 		
-		//Timer t = new Timer();
-		//t.timeMST();
+		Timer t = new Timer();
+		t.timeAndNumberColoration();
 		
 		
 		

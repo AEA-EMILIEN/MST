@@ -25,13 +25,29 @@ public class Dsatur extends Coloration {
 	// degré de saturation maximal
 	private int maxSat = -1;
 	
+	public void init()
+	{
+		this.neigthColor = new HashMap<Integer, Set<Integer>>();
+		this.nbVertex = 0;
+		this.vertexDD=null;
+		this.vertexDS=null;
+		this.maxSatVertex = new ArrayList<Integer>();
+		this.cptToColor=0;
+		this.maxSat = -1;
+	}
+	
 public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException {
 		/// PHASE D'INITIALISATION
+	
+		init();
+	
 		this.listColor = new ArrayList<Integer>();
 		nbVertex = g.vertex.size();
 		this.vertexDS = new int[nbVertex];
 		initColorVertex(nbVertex);		
 		cptToColor = nbVertex;
+		
+		
 		
 		for (int i = 0; i < nbVertex; i++) {
 			neigthColor.put(i, new HashSet<Integer>());
@@ -183,5 +199,19 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 			}
 		}
 		return;
+	}
+
+	public long timeDS(Graph g)  {
+		long startTime = System.nanoTime();
+		try {
+			dsatur(g);
+		} catch (VertexNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		long endTime = System.nanoTime();
+
+		long duration = (endTime - startTime);  //divide by 1000000 to get milliseconds.
+		return duration/1000000; 
 	} 
 }
