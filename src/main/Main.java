@@ -47,16 +47,18 @@ public class Main {
 		System.out.println("Coloration");
 		System.out.println(h1.toString());
 		*/
-		Graph g = new Graph(10, (float)0.7, 10);
+		
+		
+		Graph g = new Graph(50, (float)0.3, 100000);
 		System.out.println(g.toString());
-		Coloration col = new Dsatur();
-		HashMap<Integer, Integer> h = ((Dsatur) col).dsatur(g);
-		System.out.println("Coloration Dsature");
+		Coloration col = new Naif();
+		HashMap<Integer, Integer> h = ((Naif) col).naif(g);
+		System.out.println("Coloration Naif");
 		System.out.println(h.toString());
 		
-		col = new Naif();
-		h = ((Naif) col).naif(g);
-		System.out.println("Coloration Naif");
+		col = new Dsatur();
+		h = ((Dsatur) col).dsatur(g);
+		System.out.println("Coloration Dsature");
 		System.out.println(h.toString());
 		
 		col = new WelshPowell();
