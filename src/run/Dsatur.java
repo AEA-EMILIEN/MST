@@ -1,15 +1,18 @@
 package run;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import exception.VertexNotFoundException;
-import graph.Degre;
 import graph.Graph;
 
+/**
+ * Classe implémentant la méthode de coloration de Dsatur
+ * @author Emilie & Julien
+ *
+ */
 public class Dsatur extends Coloration {
 	
 	// hashMap sommet -> set de couleurs des voisins
@@ -25,6 +28,9 @@ public class Dsatur extends Coloration {
 	// degré de saturation maximal
 	private int maxSat = -1;
 	
+	/**
+	 * Réinitialise tous les attributs. 
+	 */
 	public void init()
 	{
 		this.neigthColor = new HashMap<Integer, Set<Integer>>();
@@ -36,7 +42,7 @@ public class Dsatur extends Coloration {
 		this.maxSat = -1;
 	}
 	
-public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException {
+	public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException {
 		/// PHASE D'INITIALISATION
 	
 		init();
@@ -46,8 +52,6 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 		this.vertexDS = new int[nbVertex];
 		initColorVertex(nbVertex);		
 		cptToColor = nbVertex;
-		
-		
 		
 		for (int i = 0; i < nbVertex; i++) {
 			neigthColor.put(i, new HashSet<Integer>());
@@ -201,6 +205,11 @@ public HashMap<Integer,Integer> dsatur (Graph g) throws VertexNotFoundException 
 		return;
 	}
 
+	/**
+	 * Renvoie le temps que met la fonction dsatur à s'exécuter sur le graphe
+	 * @param g le graphe
+	 * @return le temps
+	 */
 	public long timeDS(Graph g)  {
 		long startTime = System.nanoTime();
 		try {

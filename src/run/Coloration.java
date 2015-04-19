@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Classe abstraite posant les bases pour une coloration
+ * @author Emilie & Julien
+ *
+ */
 public abstract class Coloration {
 	
-	protected ArrayList<Integer> listColor = new ArrayList<Integer>();
 	// la liste des couleurs utilisées
+	protected ArrayList<Integer> listColor = new ArrayList<Integer>();
 	
-	protected HashMap<Integer,Integer> colorVertex = new HashMap<Integer, Integer>();
 	// map : associe à chaque sommet une couleur
+	protected HashMap<Integer,Integer> colorVertex = new HashMap<Integer, Integer>();
+	
 	
 	/**
 	 * Donne la plus petite couleur du sommet en fonction de la couleur de ses voisins, l'ajoute si elle n'existe pas
@@ -18,6 +24,7 @@ public abstract class Coloration {
 	 * @return la couleur
 	 */
 	public int getColor(Set<Integer> listN) {
+		
 		int[] colors = new int[this.listColor.size()];
 		int cpt = 0;
 		// initialise à -1 le tableau de couleurs
@@ -56,7 +63,7 @@ public abstract class Coloration {
 	 * @return le nombre de couleur
 	 */
 	public int nbColor() {
-		return this.colorVertex.size();
+		return this.listColor.size();
 	}
 
 	
